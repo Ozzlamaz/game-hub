@@ -33,6 +33,7 @@ const useData = <T>(
           if (err instanceof CanceledError) return;
           setError(err.message);
           setIsLoading(false);
+          console.log(err);
         });
 
       return () => controller.abort();
