@@ -1,4 +1,4 @@
-import { Button, HStack, Image, List } from "@chakra-ui/react";
+import { Button, HStack, Heading, Image, List } from "@chakra-ui/react";
 import useGenres, { Genre } from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
 import GenreListSkeleton from "./GenreListSkeleton";
@@ -15,33 +15,41 @@ const GenresList = ({ selectedGenre, onSelectGenre }: Props) => {
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   return (
-    <List>
-      {genres.map((genre) => (
-        <GenreListContainer key={genre.id}>
-          <HStack>
-            <Image
-              boxSize="32px"
-              borderRadius={8}
-              src={getCroppedImageUrl(genre.image_background)}
-            />
-            <Button
-              onClick={() => onSelectGenre(genre)}
-              variant="link"
-              fontSize="lg"
-              fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
-            >
-              {genre.name}
-            </Button>
-          </HStack>
-        </GenreListContainer>
-      ))}
-      {isLoading &&
-        skeletons.map((skeleton) => (
-          <GenreListContainer key={skeleton}>
-            <GenreListSkeleton />
+    <>
+      <Heading fontSize="2xl" marginBottom={3}>
+        Genres
+      </Heading>
+      <List>
+        {genres.map((genre) => (
+          <GenreListContainer key={genre.id}>
+            <HStack>
+              <Image
+                boxSize="32px"
+                objectFit="cover"
+                borderRadius={8}
+                src={getCroppedImageUrl(genre.image_background)}
+              />
+              <Button
+                onClick={() => onSelectGenre(genre)}
+                variant="link"
+                fontSize="lg"
+                fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
+                whiteSpace="normal"
+                textAlign="left"
+              >
+                {genre.name}
+              </Button>
+            </HStack>
           </GenreListContainer>
         ))}
-    </List>
+        {isLoading &&
+          skeletons.map((skeleton) => (
+            <GenreListContainer key={skeleton}>
+              <GenreListSkeleton />
+            </GenreListContainer>
+          ))}
+      </List>
+    </>
   );
 };
 export default GenresList;
